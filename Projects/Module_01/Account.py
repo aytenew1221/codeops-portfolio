@@ -42,9 +42,31 @@ class Account:
         print("=======================================\n")
 
 
-# ==========================================
+class SavingsAccount(Account):
+    def __init__(self, owner, account_number, balance=1500, interest_rate=0.05):
+        super().__init__(owner, account_number, balance)
+        self.interest_rate = interest_rate
+
+    def add_interest(self):
+        interest = self.balance * self.interest_rate
+        self.deposit(interest)
+        print(f"Interest of {interest:.2f} ETB applied at a rate of {self.interest_rate * 100:.2f}%.")
+class CurrentAccount(Account):
+    def __init__(self, owner, account_number, balance=1500, overdraft_limit=1000):
+        super().__init__(owner, account_number, balance)
+        self.overdraft_limit = overdraft_limit
+
+    def withdraw(self, amount):
+        if amount <= 0:
+            print("Withdrawal amount must be greater than 0 ETB.")
+        elif amount > self.balance + self.overdraft_limit:
+            print("Insufficient balance and overdraft limit exceeded.")
+        else:
+            self._Account__balance -= amount
+            print(f"{amount:.2f} ETB withdrawn successfully. Current balance: {self.balance:.2f} ETB.")  
+
+
 # Main Program
-# ==========================================
 
 account1 = Account("Abebe Kebede", "10010001")
 

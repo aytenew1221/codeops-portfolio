@@ -1,62 +1,19 @@
-
-# Addis Bank - Account Management System
-
 class Account:
-    def __init__(self, owner, account_number, balance=1500):
-        # Public attributes
+    def __init__(self, owner, balance=0):
         self.owner = owner
-        self.account_number = account_number
+        self.balance = balance
 
-        # Private attribute
-        self.__balance = balance
-
-    # Read-only property
-    @property
-    def balance(self):
-        return self.__balance
-
-    # Deposit money
     def deposit(self, amount):
-        if amount <= 0:
-            print("Deposit amount must be greater than 0 ETB.")
-        else:
-            self.__balance += amount
-            print(f"{amount:.2f} ETB deposited successfully.")
+        self.balance += amount
+#inheretance
+class SavingsAccount(Account):
+    def __init__(self, owner, balance=0, interest_rate=0.02):
+        super().__init__(owner, balance)
+        self.interest_rate = interest_rate
+#saving account has a method to add interest to the balance
+    def add_interest(self):
+        self.balance += self.balance * self.interest_rate
+s = SavingsAccount("Almaz", 1500)
+s.deposit(500)#inherited
+print(s.balance)  
 
-    # Withdraw money
-    def withdraw(self, amount):
-        if amount <= 0:
-            print("Withdrawal amount must be greater than 0 ETB.")
-        elif amount > self.__balance:
-            print("Insufficient balance.")
-        else:
-            self.__balance -= amount
-            print(f"{amount:.2f} ETB withdrawn successfully.")
-
-    # Display account statement
-    def statement(self):
-        print("\n========== Account Statement ==========")
-        print(f"Owner          : {self.owner}")
-        print(f"Account Number : {self.account_number}")
-        print(f"Balance        : {self.balance:.2f} ETB")
-        print("=======================================\n")
-
-# Main Program
-
-account1 = Account("Abebe Kebede", "10010001")
-
-account1.statement()
-
-print("Depositing 5000 ETB...")
-account1.deposit(5000)
-
-print("Withdrawing 1500 ETB...")
-account1.withdraw(1500)
-
-print("Trying to withdraw 10000 ETB...")
-account1.withdraw(10000)
-
-print("Trying to deposit -500 ETB...")
-account1.deposit(-500)
-
-account1.statement()
